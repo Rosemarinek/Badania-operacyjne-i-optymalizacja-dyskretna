@@ -43,6 +43,45 @@ def dijkstra(n, matrix, start_vertex):
 
     return distances, paths
 
+def dijkstra_table(n, matrix, start_vertex):
+    distances = [float('inf')] * n
+    distances[start_vertex] = 0
+    visited = [False] * n
+    predecessors = [-1] * n
+
+    for _ in range(n):
+        min_distance = float('inf')
+        current_vertex = -1
+
+        for i in range(n):
+            if not visited[i] and distances[i] < min_distance:
+                min_distance = distances[i]
+                current_vertex = i
+
+        if current_vertex == -1:
+            break
+
+        visited[current_vertex] = True
+
+        for i in range(n):
+            if matrix[current_vertex][i] and distances[current_vertex] + matrix[current_vertex][i] < distances[i]:
+                distances[i] = distances[current_vertex] + matrix[current_vertex][i]
+                predecessors[i] = current_vertex
+
+    paths = {}
+    for i in range(n):
+        if distances[i] != float('inf'):
+            path = []
+            current = i
+            while current != -1:
+                path.append(current)
+                current = predecessors[current]
+            path.reverse()
+            paths[i] = path
+        else:
+            paths[i] = []
+
+    return distances, paths
 
 def bellman_ford(n, matrix, start_vertex):
     distances = [float('infinity')] * n
@@ -84,17 +123,23 @@ def bellman_ford(n, matrix, start_vertex):
     return distances, paths
 
 
-n, matrix = read_graph_from_file("large_graph.txt")
+n, matrix = read_graph_from_file("MinPaths_data25.txt")
 start_vertex = 0  # zakładając, że zaczynamy od wierzchołka 0 (czyli A)
 
 t_s1 = time.perf_counter()
-print("Dijkstra:", dijkstra(n, matrix, start_vertex))
+print("Dijkstra - kopiec:", dijkstra(n, matrix, start_vertex))
 t_e1= time.perf_counter()
 time1 = t_e1 - t_s1
 print(f'Czas obliczeń: {time1}')
 
 t_s2 = time.perf_counter()
-print("Bellman-Ford:", bellman_ford(n, matrix, start_vertex))
+print("Dijkstra - tablica:", dijkstra_table(n, matrix, start_vertex))
 t_e2= time.perf_counter()
 time2 = t_e2 - t_s2
 print(f'Czas obliczeń: {time2}')
+
+t_s3 = time.perf_counter()
+print("Bellman-Ford:", bellman_ford(n, matrix, start_vertex))
+t_e3= time.perf_counter()
+time3 = t_e3 - t_s3
+print(f'Czas obliczeń: {time3}')
