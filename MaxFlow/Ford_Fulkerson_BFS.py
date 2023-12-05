@@ -1,3 +1,5 @@
+import time
+
 def ford_fulkerson(graph, source, sink):
     n = len(graph)
     parents = [-1] * n
@@ -71,10 +73,14 @@ def read_graph_from_file(filename):
 
 
 if __name__ == "__main__":
-    filename = 'MaxFlows_test8.txt'
+    filename = 'MaxFlows_data20.txt'
+    t_s = time.perf_counter()
     graph, n = read_graph_from_file(filename)
     max_flow, flow_graph, flow_paths = ford_fulkerson(graph, 0, n - 1)
+    t_e = time.perf_counter()
+    time = t_e - t_s
 
     print("Maksymalny przepływ:", max_flow)
     print_flow_graph(flow_graph)
     print_flow_paths(flow_paths)
+    print(f'Czas obliczeń: {time}')
