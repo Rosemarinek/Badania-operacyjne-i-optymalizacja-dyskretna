@@ -8,14 +8,14 @@ struct RNG {
     uint64_t m;
 };
 
-void init_rng(struct RNG rng, uint32_t seed) {
+void init_rng(struct RNG *rng, uint32_t seed) {
     rng->r = seed;
     rng->a = 1664525;
     rng->c = 1013904223;
     rng->m = 4294967296; // 2^32
 }
 
-double next(struct RNGrng) {
+double next(struct RNG *rng) {
     rng->r = (rng->a * rng->r + rng->c) % rng->m;
     return ((double) rng->r) / rng->m;
 }
@@ -27,7 +27,7 @@ int main() {
 
     uint32_t first_value = rng.r;
     uint64_t count = 0;
-
+    
     do {
         next(&rng);
         count++;

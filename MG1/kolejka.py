@@ -118,7 +118,7 @@ def D(epoches,buffer):
         a = max(b,t)
         random_number1 = random.uniform(0,1)
         random_number2 = random.uniform(0,1)
-        t_s = 60 + math.sqrt(-2.0 * math.log(random_number1)) * math.cos(2.0 * math.pi * random_number2) * math.sqrt(20)
+        t_s = 60 + math.sqrt(-2.0 * math.log(random_number1)) * math.cos(2.0 * math.pi * random_number2) * 20
         b = a + t_s
         buffer = buffer + a - t
     print(buffer/epoches) 
@@ -133,7 +133,7 @@ def D(epoches,buffer):
         a = max(b,t)
         rand1 = random_number.next() 
         rand2 = random_number.next()
-        t_s = 60 + math.sqrt(-2.0 * math.log(rand1)) * math.cos(2.0 * math.pi * rand2) * math.sqrt(20)
+        t_s = 60 + math.sqrt(-2.0 * math.log(rand1)) * math.cos(2.0 * math.pi * rand2) * 20
         b = a + t_s
         buffer = buffer + a - t
     print(buffer/epoches)    
